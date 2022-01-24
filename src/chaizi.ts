@@ -29,16 +29,22 @@ export function chaizi(guess: string[]): boolean {
 }
 
 // check if guess is grammarly correct using a trie
-export function validate(guess: string, t: Trie): boolean {
-  // dfs if we can reach the end
-  // @todo
-  return true;
-}
-
-function dfsValid(remain: string, t: Trie): boolean {
-  if (remain.length === 0) {
+// dfs if we can reach the end
+export function validate(remain: string, t: Trie): boolean {
+  // if contains remain, return true
+  // if contains prefix, return dfsValid(remain - prefix)
+  const n = remain.length;
+  if (n === 0) {
     return true;
   }
-  // @todo
+  if (t.contains(remain)) {
+    return true;
+  }
+  if (t.contains(remain.slice(0, 1))) {
+    return validate(remain.slice(1), t);
+  }
+  if (n >= 2 && t.contains(remain.slice(0, 2))) {
+    return validate(remain.slice(2), t);
+  }
   return false;
 }

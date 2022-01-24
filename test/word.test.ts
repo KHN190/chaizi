@@ -31,6 +31,7 @@ describe('build trie', function() {
   it('should insert and find the word', function() {
     const t = new Trie();
     t.insert('abc');
+
     expect(t.contains('a')).equal(false);
     expect(t.contains('abc')).equal(true);
   });
@@ -38,6 +39,7 @@ describe('build trie', function() {
   it('should insert and start with', function() {
     const t = new Trie();
     t.insert('abc');
+
     expect(t.startsWith('a')).equal(true);
     expect(t.startsWith('ab')).equal(true);
     expect(t.startsWith('bc')).equal(false);
@@ -51,6 +53,10 @@ describe('validate characters', function () {
     t.insert('野火');
     t.insert('烧');
     t.insert('不尽');
+
+    expect(validate('野火烧', t)).equal(true);
+    expect(validate('烧不尽', t)).equal(true);
+    expect(validate('野火不尽', t)).equal(true);
     expect(validate('野火烧不尽', t)).equal(true);
   });
 });
