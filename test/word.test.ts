@@ -60,7 +60,7 @@ describe('validate characters', function () {
     expect(heli('不合法字符', t)).equal(false);
   });
 
-  it('should return status code for guess', function() {
+  it('should return status code for guess', function () {
     let status = chaiju('一天的结束', '一天的开始');
     // console.log("status: ", status);
     expect(status[0]).equal(0b1111);

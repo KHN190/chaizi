@@ -51,7 +51,7 @@ export function chaiju(guess: string, answer: string): number[] {
       const c1 = guess.slice(i, i + 1);
       const c2 = answer.slice(j, j + 1);
       // exact match includes position
-      if (c1 === c2 && i === j) { 
+      if (c1 === c2 && i === j) {
         res[i] = 0b1111;
         continue;
       }
