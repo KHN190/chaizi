@@ -33,7 +33,7 @@ export class Trie {
   public startsWith(key: string): boolean {
     const node = this.getNode(key);
     return node !== null;
-  };
+  }
 
   // insert a word by char
   public insert(key: string): void {

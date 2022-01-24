@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { expect } from 'chai';
 
-import { loadDict, chaizi, validate } from '../src/chaizi';
+import { loadDict, heli, chaiju } from '../src/chaizi';
 import { Trie } from '../src/trie';
 
 /* trivial tests to make sure it works */
@@ -27,8 +27,8 @@ describe('load data', function () {
 });
 
 /* trie */
-describe('build trie', function() {
-  it('should insert and find the word', function() {
+describe('build trie', function () {
+  it('should insert and find the word', function () {
     const t = new Trie();
     t.insert('abc');
 
@@ -36,7 +36,7 @@ describe('build trie', function() {
     expect(t.contains('abc')).equal(true);
   });
 
-  it('should insert and start with', function() {
+  it('should insert and start with', function () {
     const t = new Trie();
     t.insert('abc');
 
@@ -54,9 +54,19 @@ describe('validate characters', function () {
     t.insert('烧');
     t.insert('不尽');
 
-    expect(validate('野火烧', t)).equal(true);
-    expect(validate('烧不尽', t)).equal(true);
-    expect(validate('野火不尽', t)).equal(true);
-    expect(validate('野火烧不尽', t)).equal(true);
+    expect(heli('烧不尽', t)).equal(true);
+    expect(heli('野火不尽', t)).equal(true);
+    expect(heli('野火烧不尽', t)).equal(true);
+    expect(heli('不合法字符', t)).equal(false);
+  });
+
+  it('should return status code for guess', function() {
+    let status = chaiju('一天的结束', '一天的开始');
+    // console.log("status: ", status);
+    expect(status[0]).equal(0b1111);
+    expect(status[1]).equal(0b1111);
+    expect(status[2]).equal(0b1111);
+    expect(status[3]).equal(0b0000);
+    expect(status[4]).equal(0b0000);
   });
 });
