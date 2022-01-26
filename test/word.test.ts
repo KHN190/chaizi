@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { expect } from 'chai';
 
-import { loadDict, heli, chaiju } from '../src/chaizi';
+import { loadDict, heli, chaiju, buildHintsText } from '../src/chaizi';
 import { Trie } from '../src/trie';
 
 /* trivial tests to make sure it works */
@@ -48,25 +48,20 @@ describe('build trie', function () {
 
 /* validate input */
 describe('validate characters', function () {
-  it('should validate 5 chars', function () {
+  it('should validate chars grammarly', function () {
     const t = new Trie();
-    t.insert('野火');
-    t.insert('烧');
-    t.insert('不尽');
+    t.insert('亦');
+    t.insert('可');
+    t.insert('赛艇');
 
-    expect(heli('烧不尽', t)).equal(true);
-    expect(heli('野火不尽', t)).equal(true);
-    expect(heli('野火烧不尽', t)).equal(true);
-    expect(heli('不合法字符', t)).equal(false);
+    expect(heli('亦可赛艇', t)).equal(true);
+    expect(heli('不可赛艇', t)).equal(false);
   });
 
-  it('should return status code for guess', function () {
-    let status = chaiju('一天的结束', '一天的开始');
-    // console.log("status: ", status);
-    expect(status[0]).equal(0b1111);
-    expect(status[1]).equal(0b1111);
-    expect(status[2]).equal(0b1111);
-    expect(status[3]).equal(0b0000);
-    expect(status[4]).equal(0b0000);
+  it('should return exact match', function () {
+    let hints = chaiju('一三三五四', '一二三四五');
+    console.log(hints);
+    let text = buildHintsText(hints);
+    console.log(text);
   });
 });

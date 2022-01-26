@@ -10,6 +10,8 @@ const w2 = readFileSync('./data/w2.dict.utf8', 'utf-8').split(/\n/);
 const words = loadDict();
 const trie = buildTrie();
 
+const notNull = (e: any) => e != null;
+
 // load character dictionary with strokes + radicals
 export function loadDict(): any {
   let words: any = {};
@@ -34,43 +36,109 @@ export function buildTrie(): Trie {
   return t;
 }
 
-export function hanzi(curr: string) {}
-
-// 部首正确: 0001
-// 笔画正确: 0010
-// 字符正确: 0111
-// 位置正确: 1000
-//
 // assume they are both same length
 // assume they are already validated, all in words dict
-export function chaiju(guess: string, answer: string): number[] {
-  const m = Math.min(guess.length, answer.length);
-  let res: number[] = new Array(m);
+//
+// exact match?
+// 0..m 是位置正确的匹配，m..2m 是笔画正确但位置不正确
+export function chaiju(curr: string, answer: string): any {
+  const m = curr.length;
+
+  let hints: any = {
+    radicals: new Array(m * 2),
+    strokes: new Array(m * 2),
+    exact: new Array(m),
+  };
+
   for (var i = 0; i < m; i++) {
     for (var j = 0; j < m; j++) {
-      const c1 = guess.slice(i, i + 1);
+      const c1 = curr.slice(i, i + 1);
       const c2 = answer.slice(j, j + 1);
-      // exact match includes position
-      if (c1 === c2 && i === j) {
-        res[i] = 0b1111;
-        continue;
+
+      if (hintExact(c1, c2)) {
+        hints['exact'][i] = i === j ? c1 : null;
       }
-      // compare strokes and radicals
-      res[i] |= chaizi(c1, c2, words);
+      if (hintRadical(c1, c2)) {
+        if (i === j) {
+          hints['radicals'][i] = words[c1]['radicals'];
+          hints['radicals'][i + m] = null;
+        } else {
+          hints['radicals'][i + m] = words[c1]['radicals'];
+          hints['radicals'][i] = null;
+        }
+      }
+      if (hintStroke(c1, c2)) {
+        if (i === j) {
+          hints['strokes'][i] = words[c1]['strokes'];
+          hints['strokes'][i + m] = null;
+        } else {
+          hints['strokes'][i + m] = words[c1]['strokes'];
+          hints['strokes'][i] = null;
+        }
+      }
     }
   }
+  return hints;
+}
+
+export function buildHintsText(hints: any): string {
+  const m = hints['exact'].length;
+  let res: string = '';
+  
+  for (var i = 0; i < m; i++) {
+    res += hints['exact'][i] ?? '﹏';
+  }; 
+  res += '\n';
+
+  res += hints['radicals'].slice(0, m).map(function(v: string) {
+    if (v === null) return '﹏';
+    return v;
+  }).join();
+
+  if (hints['radicals'].slice(m).some(notNull)) {
+    res += '(';
+    res += hints['radicals'].slice(m).filter(notNull).join();
+    res += ')';
+  }
+  res += '\n';
+
+  res += hints['strokes'].slice(0, m).map(function(v: number) {
+    if (v === null) return '﹏';
+    if (v < 10) return '0'+v;
+    return v;
+  }).join();
+
+  if (hints['strokes'].slice(m).some(notNull)) {
+    res += '(';
+    res += hints['strokes'].slice(m).filter(notNull).join();
+    res += ')';
+  }
+  res += '\n';
+
   return res;
 }
 
-function chaizi(a: string, b: string, words: any): number {
+function hintExact(c1: string, c2: string): boolean {
+  return c1 === c2;
+}
+
+function hintStroke(c1: string, c2: string): boolean {
+  return words[c1]['strokes'] === words[c2]['strokes'];
+}
+
+function hintRadical(c1: string, c2: string): boolean {
+  return words[c1]['radicals'] === words[c2]['radicals'];
+}
+
+function chaizi(c1: string, c2: string): number {
   let status = 0b000;
-  if (words[a]['radicals'] === words[b]['radicals']) {
+  if (words[c1]['radicals'] === words[c2]['radicals']) {
     status |= 0b001;
   }
-  if (words[a]['strokes'] === words[b]['strokes']) {
+  if (words[c1]['strokes'] === words[c2]['strokes']) {
     status |= 0b010;
   }
-  if (words[a] === words[b]) {
+  if (words[c1] === words[c2]) {
     status |= 0b111;
   }
   return status;
