@@ -8,8 +8,8 @@ let states: any = {
 
 export function start() {
   // lock all tiles
-  document.querySelectorAll("input[type=text]").forEach(function(e) {
-    console.log("lock: " + e);
+  document.querySelectorAll('input[type=text]').forEach(function (e) {
+    console.log('lock: ' + e);
     locked(e);
   });
   // enable first input
@@ -76,6 +76,26 @@ function onDeletePressed(e) {
   }
 }
 
+function onSendGuess() {
+  // get input
+  // valiidate
+  // if success: nextGuess()
+  // if failed:  renderHints()
+}
+
+// Set Game States
+function nextGuess() {
+  states['guess'] += 1;
+  states['tile'] = 0;
+  // enable next tile
+}
+
+function currGuess() {
+  // change css of current guess.
+  // render curr information
+}
+
+// Helper
 function autofill(e: HTMLElement) {
   if (states['input']) {
     e.value = states['input'].slice(0, 1);
@@ -106,13 +126,7 @@ function toNextInput() {
       toNextInput();
     }
   } else {
-
-    if (states['input']) {
-      curr.value = states['input'].slice(0, 1);
-    }
-    if (curr.value) {
-      curr.value = curr.value.slice(0, 1);
-    }
+    autofill(curr);
     states['input'] = null;
   }
 }
