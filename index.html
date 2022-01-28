@@ -3,20 +3,111 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>人民拆字</title>
+    <!-- style -->
+    <link rel="stylesheet" href="src/main.css">
+    <!-- icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@900&display=swap" rel="stylesheet">
+
+    <title>拆字</title>
 </head>
 
 <body>
-    <div id="container">
-        <h1>[ 人民拆字 ]</h1>
-        <form>
-            <div class="input">
-                <input type="text" placeholder="Ticks" id="ticks" size="17" autofocus="autofocus" />
+    <header>
+        <!-- title -->
+        <div class="center">
+            <h1>[ 拆字 ]</h1>
+        </div>
+    </header>
+    <div class="board">
+        <!-- hints -->
+        <div id="hints">
+            <p class="spacer"></p>
+        </div>
+        <!-- forms -->
+        <form id="guess1">
+            <div class="row center tiles">
+                <input type="text" class="wait" id="0" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="1" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="2" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="3" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="4" size="2" autofocus="autofocus" />
             </div>
         </form>
-        <div id="datetime" class="item"></div>
+
+        <form id="guess2">
+            <div class="row center tiles">
+                <input type="text" class="locked" id="0" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="1" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="2" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="3" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="4" size="2" autofocus="autofocus" />
+            </div>
+        </form>
+
+        <form id="guess3">
+            <div class="row center tiles">
+                <input type="text" class="locked" id="0" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="1" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="2" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="3" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="4" size="2" autofocus="autofocus" />
+            </div>
+        </form>
+
+        <form id="guess4">
+            <div class="row center tiles">
+                <input type="text" class="locked" id="0" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="1" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="2" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="3" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="4" size="2" autofocus="autofocus" />
+            </div>
+        </form>
+
+        <form id="guess5">
+            <div class="row center tiles">
+                <input type="text" class="locked" id="0" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="1" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="2" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="3" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="4" size="2" autofocus="autofocus" />
+            </div>
+        </form>
+
+        <form id="guess6">
+            <div class="row center tiles">
+                <input type="text" class="locked displaced" id="0" size="2" autofocus="autofocus" />
+                <input type="text" class="locked correct" id="1" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="2" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="3" size="2" autofocus="autofocus" />
+                <input type="text" class="locked" id="4" size="2" autofocus="autofocus" />
+            </div>
+        </form>
+
+        <!-- submit -->
+        <div class="row spacer"></div>
+        <div class="row center">
+            <button id="submit" class="button">
+                <i class="fa fa-terminal"></i>
+            </button>
+
+            <button id="delete" class="button">
+                <i class="fa fa-backspace"></i>
+            </button>
+        </div>
+        <div class="row spacer"></div>
     </div>
     <script src="./src/index.ts"></script>
+
+    <footer>
+        <div class="row">
+            <h1><a href="#" class="fa fa-instagram"></a></h1>
+        </div>
+    </footer>
 </body>
 
 </html>

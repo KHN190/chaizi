@@ -84,16 +84,19 @@ export function chaiju(curr: string, answer: string): any {
 export function buildHintsText(hints: any): string {
   const m = hints['exact'].length;
   let res: string = '';
-  
+
   for (var i = 0; i < m; i++) {
     res += hints['exact'][i] ?? '﹏';
-  }; 
+  }
   res += '\n';
 
-  res += hints['radicals'].slice(0, m).map(function(v: string) {
-    if (v === null) return '﹏';
-    return v;
-  }).join();
+  res += hints['radicals']
+    .slice(0, m)
+    .map(function (v: string) {
+      if (v === null) return '﹏';
+      return v;
+    })
+    .join();
 
   if (hints['radicals'].slice(m).some(notNull)) {
     res += '(';
@@ -102,11 +105,14 @@ export function buildHintsText(hints: any): string {
   }
   res += '\n';
 
-  res += hints['strokes'].slice(0, m).map(function(v: number) {
-    if (v === null) return '﹏';
-    if (v < 10) return '0'+v;
-    return v;
-  }).join();
+  res += hints['strokes']
+    .slice(0, m)
+    .map(function (v: number) {
+      if (v === null) return '﹏';
+      if (v < 10) return '0' + v;
+      return v;
+    })
+    .join();
 
   if (hints['strokes'].slice(m).some(notNull)) {
     res += '(';

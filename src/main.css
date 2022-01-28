@@ -1,0 +1,97 @@
+html {
+	color: black;
+	font-family: 'Noto Sans SC', sans-serif;
+}
+
+header {
+	border-bottom: 1px solid #e1e1e1;
+}
+
+button {
+	border: none;
+	display: inline-block;
+	cursor: pointer;
+}
+
+footer {
+	color: #e1e1e1;
+	margin: 30px 0;
+}
+
+a {
+	color: #e1e1e1;
+	text-decoration: none;
+    cursor: pointer;
+}
+
+.row {
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.center {
+	text-align: center;
+}
+
+.spacer {
+	padding: 10px 0;
+}
+
+.board {
+	background-color: #f5f5f5;
+	width: 90%;
+	margin: 0 5%;
+	border-radius: 4px;
+}
+
+.button {
+	background-color: #e1e1e1;
+	border-radius: 4px;
+	padding: 12px 30px;
+	font-size: 2em;
+	text-align: center;
+	color: white;
+}
+
+.tiles input {
+    align-items: center;
+    vertical-align: middle;
+
+    font-size: 2rem;
+    line-height: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+
+    border-width: 3px;
+}
+
+/* input states */
+.tiles .wait {
+    border-style: dashed;
+    border-color: #e1e1e1;
+}
+.tiles .locked {
+    border-style: solid;
+    border-color: #e1e1e1;
+	pointer-events: none;
+}
+.tiles .checked {
+	border-style: solid;
+	pointer-events: none;
+}
+/* hint colors */
+.tiles .displaced {
+	border-color: wheat; 
+	color: #e1e1e1;
+}
+.tiles .correct {
+	border-color: darkseagreen; 
+}
+.tiles .wrong { 
+	border-color: #767676; 
+	color: #e1e1e1;
+}
+
