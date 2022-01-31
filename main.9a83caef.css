@@ -1,0 +1,153 @@
+html {
+	color: black;
+	font-family: 'Noto Sans SC', sans-serif;
+}
+
+header {
+	border-bottom: 1px solid #e1e1e1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+button {
+	border: none;
+	display: inline-block;
+	cursor: pointer;
+}
+
+footer {
+	color: #e1e1e1;
+	margin: 30px 0;
+}
+
+a {
+	color: #e1e1e1;
+	text-decoration: none;
+    cursor: pointer;
+}
+
+span {
+	font-family: "Noto Serif SC", serif;
+}
+
+.row {
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	min-width: 320px;
+}
+
+.center {
+	text-align: center;
+}
+
+.icon {
+	margin: 10px;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.title {
+	margin: 0px 30%;
+}
+
+.spacer {
+	padding: 10px 0;
+}
+
+.board {
+	background-color: #f5f5f5;
+	width: 90%;
+	margin: 0 5%;
+	border-radius: 4px;
+	min-width: 400px;
+}
+
+.button {
+	background-color: #e1e1e1;
+	border-radius: 4px;
+	padding: 12px 30px;
+	font-size: 2em;
+	text-align: center;
+	color: white;
+}
+
+.tiles input {
+    align-items: center;
+    vertical-align: middle;
+
+    font-size: 2rem;
+    line-height: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+
+    border-width: 3px;
+}
+
+/* input states */
+.tiles .wait {
+    border-style: dashed;
+    border-color: #e1e1e1;
+}
+.tiles .locked {
+    border-style: solid;
+    border-color: #e1e1e1;
+	pointer-events: none;
+}
+.tiles .checked {
+	border-style: solid;
+	pointer-events: none;
+}
+
+/* hint colors */
+.tiles .radical {
+	border-color: #f1c168;
+	background-color: #f1c168;
+	color: white;
+}
+.tiles .stroke {
+	border-color: #598dff;
+	background-color: #598dff;
+	color: white;
+}
+.tiles .workharder {
+	border-color: #2abbbb;
+	background-color: #2abbbb;
+	color: white;
+}
+.tiles .correct {
+	border-color: #6aaa64; 
+	background-color: #6aaa64;
+	color: white;
+}
+.tiles .wrong { 
+	border-color: #e1e1e1;
+	background-color: #e1e1e1;
+	color: white;
+}
+.tiles .displaced {
+	border-color: indianred;
+	background-color: indianred;
+	color: white;
+}
+
+/* text hints */
+.hints {
+	margin: auto;
+	width: 30%;
+	min-width: 320px;
+	color: #545454;
+}
+
+/* colors  */
+.dark-grey {
+	color: #545454;
+}
+.light-grey {
+	color: #e1e1e1;
+}
+
+/*# sourceMappingURL=/main.9a83caef.css.map */
