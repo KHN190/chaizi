@@ -10,7 +10,7 @@
   "scripts": {
     "start": "parcel serve index.html",
     "build": "cross-env NODE_ENV=production parcel build index.html --public-url .",
-    "deploy": "gh-pages -d dist",
+    "deploy": "npm run build && gh-pages -d dist",
     "test": "mocha -r ts-node/register test/*.test.ts",
     "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test",
     "format": "prettier --write \"src/*.ts\" \"test/*.ts\""
