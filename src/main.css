@@ -24,11 +24,16 @@ a {
     cursor: pointer;
 }
 
+span {
+	font-family: "Noto Serif SC", serif;
+}
+
 .row {
 	margin-left: 10%;
 	margin-right: 10%;
 	margin-top: 10px;
 	margin-bottom: 10px;
+	min-width: 320px;
 }
 
 .center {
@@ -44,6 +49,7 @@ a {
 	width: 90%;
 	margin: 0 5%;
 	border-radius: 4px;
+	min-width: 400px;
 }
 
 .button {
@@ -82,16 +88,51 @@ a {
 	border-style: solid;
 	pointer-events: none;
 }
+
 /* hint colors */
-.tiles .displaced {
-	border-color: wheat; 
-	color: #e1e1e1;
+.tiles .radical {
+	border-color: #f1c168;
+	background-color: #f1c168;
+	color: white;
+}
+.tiles .stroke {
+	border-color: #598dff;
+	background-color: #598dff;
+	color: white;
+}
+.tiles .workharder {
+	border-color: #2abbbb;
+	background-color: #2abbbb;
+	color: white;
 }
 .tiles .correct {
-	border-color: darkseagreen; 
+	border-color: #6aaa64; 
+	background-color: #6aaa64;
+	color: white;
 }
 .tiles .wrong { 
-	border-color: #767676; 
-	color: #e1e1e1;
+	border-color: #e1e1e1;
+	background-color: #e1e1e1;
+	color: white;
+}
+.tiles .displaced {
+	border-color: indianred;
+	background-color: indianred;
+	color: white;
 }
 
+/* text hints */
+.hints {
+	margin: auto;
+	width: 30%;
+	min-width: 320px;
+	color: #545454;
+}
+
+/* colors  */
+.dark-grey {
+	color: #545454;
+}
+.light-grey {
+	color: #e1e1e1;
+}

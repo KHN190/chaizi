@@ -1,9 +1,9 @@
-import { readFileSync } from 'fs';
 import { Trie } from './trie';
+import ws from './data/word.min.json';
 
-import ws from '../data/word.min.json';
-const w1 = readFileSync('./data/w1.dict.utf8', 'utf-8').split(/\n/);
-const w2 = readFileSync('./data/w2.dict.utf8', 'utf-8').split(/\n/);
+var fs = require('fs');
+const w1 = fs.readFileSync('./data/w1.dict.utf8', 'utf-8').split(/\n/);
+const w2 = fs.readFileSync('./data/w2.dict.utf8', 'utf-8').split(/\n/);
 
 // load char dictionary
 // build phrase trie
@@ -47,7 +47,7 @@ export function chaiju(curr: string, answer: string): any {
   let hints: any = {
     radicals: new Array(m * 2),
     strokes: new Array(m * 2),
-    exact: new Array(m),
+    exact: new Array(m * 2),
   };
 
   for (var i = 0; i < m; i++) {
@@ -56,7 +56,13 @@ export function chaiju(curr: string, answer: string): any {
       const c2 = answer.slice(j, j + 1);
 
       if (hintExact(c1, c2)) {
-        hints['exact'][i] = i === j ? c1 : null;
+        if (i === j) {
+          hints['exact'][i] = true;
+          hints['exact'][i + m] = false;
+        } else {
+          hints['exact'][i] = false;
+          hints['exact'][i + m] = true;
+        }
       }
       if (hintRadical(c1, c2)) {
         if (i === j) {
@@ -82,41 +88,48 @@ export function chaiju(curr: string, answer: string): any {
 }
 
 export function buildHintsText(hints: any): string {
-  const m = hints['exact'].length;
+  const m = hints['exact'].length / 2;
   let res: string = '';
 
+  // chars
+  res += '正确：';
   for (var i = 0; i < m; i++) {
     res += hints['exact'][i] ?? '﹏';
+    res += ' ';
   }
   res += '\n';
 
+  // radicals
+  res += '部首：';
   res += hints['radicals']
     .slice(0, m)
     .map(function (v: string) {
       if (v === null) return '﹏';
       return v;
     })
-    .join();
+    .join(' ');
 
   if (hints['radicals'].slice(m).some(notNull)) {
-    res += '(';
-    res += hints['radicals'].slice(m).filter(notNull).join();
+    res += ' (其他部首：';
+    res += [...new Set(hints['radicals'].slice(m).filter(notNull))].join(' ');
     res += ')';
   }
   res += '\n';
 
+  // strokes
+  res += '笔画：';
   res += hints['strokes']
     .slice(0, m)
     .map(function (v: number) {
       if (v === null) return '﹏';
-      if (v < 10) return '0' + v;
+      // if (v < 10) return '0' + v;
       return v;
     })
-    .join();
+    .join(' ');
 
   if (hints['strokes'].slice(m).some(notNull)) {
-    res += '(';
-    res += hints['strokes'].slice(m).filter(notNull).join();
+    res += ' (其他笔画：';
+    res += [...new Set(hints['strokes'].slice(m).filter(notNull))].join(' ');
     res += ')';
   }
   res += '\n';
@@ -152,7 +165,7 @@ function chaizi(c1: string, c2: string): number {
 
 // check if guess is grammarly correct using a trie
 export function heli(remain: string, t: Trie): boolean {
-  return _heli(remain, t, 3);
+  return _heli(remain, t, 5);
 }
 
 // dfs if we can reach the end
