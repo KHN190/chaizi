@@ -1,14 +1,9 @@
 import { Trie } from './trie';
-import ws from './data/word.min.json';
+import ws from './data/words.min.json';
 
 var fs = require('fs');
 const w1 = fs.readFileSync('./data/w1.dict.utf8', 'utf-8').split(/\n/);
 const w2 = fs.readFileSync('./data/w2.dict.utf8', 'utf-8').split(/\n/);
-
-// load char dictionary
-// build phrase trie
-const words = loadDict();
-const trie = buildTrie();
 
 const notNull = (e: any) => e != null;
 
@@ -41,7 +36,7 @@ export function buildTrie(): Trie {
 //
 // exact match?
 // 0..m 是位置正确的匹配，m..2m 是笔画正确但位置不正确
-export function chaiju(curr: string, answer: string): any {
+export function chaiju(curr: string, answer: string, words): any {
   const m = curr.length;
 
   let hints: any = {
@@ -56,7 +51,7 @@ export function chaiju(curr: string, answer: string): any {
       const c2 = answer.slice(j, j + 1);
 
       if (hintExact(c1, c2)) {
-        if (i === j) {
+        if (i === j || hints['exact'][i]) {
           hints['exact'][i] = true;
           hints['exact'][i + m] = false;
         } else {
@@ -64,7 +59,7 @@ export function chaiju(curr: string, answer: string): any {
           hints['exact'][i + m] = true;
         }
       }
-      if (hintRadical(c1, c2)) {
+      if (hintRadical(c1, c2, words)) {
         if (i === j) {
           hints['radicals'][i] = words[c1]['radicals'];
           hints['radicals'][i + m] = null;
@@ -73,7 +68,7 @@ export function chaiju(curr: string, answer: string): any {
           hints['radicals'][i] = null;
         }
       }
-      if (hintStroke(c1, c2)) {
+      if (hintStroke(c1, c2, words)) {
         if (i === j) {
           hints['strokes'][i] = words[c1]['strokes'];
           hints['strokes'][i + m] = null;
@@ -141,31 +136,17 @@ function hintExact(c1: string, c2: string): boolean {
   return c1 === c2;
 }
 
-function hintStroke(c1: string, c2: string): boolean {
+function hintStroke(c1: string, c2: string, words: any): boolean {
   return words[c1]['strokes'] === words[c2]['strokes'];
 }
 
-function hintRadical(c1: string, c2: string): boolean {
+function hintRadical(c1: string, c2: string, words: any): boolean {
   return words[c1]['radicals'] === words[c2]['radicals'];
-}
-
-function chaizi(c1: string, c2: string): number {
-  let status = 0b000;
-  if (words[c1]['radicals'] === words[c2]['radicals']) {
-    status |= 0b001;
-  }
-  if (words[c1]['strokes'] === words[c2]['strokes']) {
-    status |= 0b010;
-  }
-  if (words[c1] === words[c2]) {
-    status |= 0b111;
-  }
-  return status;
 }
 
 // check if guess is grammarly correct using a trie
 export function heli(remain: string, t: Trie): boolean {
-  return _heli(remain, t, 5);
+  return _heli(remain, t, 6);
 }
 
 // dfs if we can reach the end

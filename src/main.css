@@ -5,6 +5,9 @@ html {
 
 header {
 	border-bottom: 1px solid #e1e1e1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 button {
@@ -38,6 +41,16 @@ span {
 
 .center {
 	text-align: center;
+}
+
+.icon {
+	margin: 10px;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.title {
+	margin: 0px 30%;
 }
 
 .spacer {

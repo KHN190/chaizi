@@ -1,6 +1,6 @@
 import { loadDict, buildTrie } from './chaizi';
-import { heli, chaiju, buildHintsText } from './chaizi';
-import { hintExact, hintStroke, hintRadical } from './chaizi';
+import { heli, chaiju } from './chaizi';
+import { newAnswer } from './generator';
 
 // game states
 let states: any = {
@@ -9,15 +9,12 @@ let states: any = {
   max_guess: 6,
   typing: false,
   input: null,
-  answer: '一三二四五',
-  dict: null,
+  answer: null,
+  words: null,
   trie: null,
   over: false,
   win: false,
 };
-
-// 停用词
-const stops = '一二三四五六七八九十个了的之是吗嘛哈有那哪这';
 
 export function start() {
   // lock all tiles
@@ -33,16 +30,11 @@ export function start() {
   // set submit button
   document.getElementById('submit').addEventListener('click', onFinishGuess);
   // load dict + trie
-  states['dict'] = loadDict();
+  states['words'] = loadDict();
   states['trie'] = buildTrie();
-}
+  states['answer'] = newAnswer(5, states['trie'], states['words']);
 
-function restart() {
-  // @todo
-  states['answer'] = '';
-  states['over'] = false;
-  // clear all tiles
-  // reload page?
+  console.log(states['answer']);
 }
 
 function setListeners(e: HTMLElement) {
@@ -157,7 +149,7 @@ function toNextGuess() {
 // Validation
 function validChars(s: string): boolean {
   [...s].forEach(function (c) {
-    if (!states['dict'][c]) return false;
+    if (!states['words'][c]) return false;
   });
   return true;
 }
@@ -188,9 +180,10 @@ function renderHints(guess: string) {
   const target = hintsElem();
   target.innerHTML = '';
   // get hints
-  const hints = chaiju(guess, states['answer']);
+  const hints = chaiju(guess, states['answer'], states['words']);
 
-  if (isWin(hints)) {
+  if (isWin(hints['exact'])) {
+    console.log('you win!');
     states['over'] = true;
     states['win'] = true;
   }

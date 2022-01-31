@@ -23,6 +23,16 @@ export class Trie {
     return this.elements;
   }
 
+  // pick a random child
+  public random(key: string): string | null {
+    const node = this.getNode(key);
+    if (node && node.children) {
+      const keys = node.children.keys();
+      return keys[ keys.length * Math.random() << 0];
+    }
+    return null;
+  }
+
   // check if we find a word
   public contains(key: string): boolean {
     const node = this.getNode(key);
