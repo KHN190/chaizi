@@ -2,6 +2,7 @@
   "name": "chaizi",
   "version": "1.0.0",
   "description": "chinese wordle",
+  "homepage": "https://khn190.github.io/chaizi/",
   "main": "src/index.ts",
   "files": [
     "src/"
